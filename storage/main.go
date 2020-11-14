@@ -18,6 +18,7 @@ var (
 
 func init() {
 	flag.IntVar(&nameLength, "file-length", 5, "Length of generated filename, extension omitted")
+	uploadDir = flag.Args()[0]
 	chars = generatePossibleChars()
 }
 
