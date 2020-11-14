@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"net"
 	"net/http"
@@ -15,23 +14,17 @@ import (
 	tusd "github.com/tus/tusd/pkg/handler"
 )
 
-var (
-	uploadPath string
-)
-
+// Found this trick that makes half the work
+// it is still called after init storage
 var _ = func() error { config.Load(); return nil }()
 
-func init() {
-	uploadPath = flag.Args()[0]
-}
-
 func main() {
-	if _, err := os.Stat(uploadPath); os.IsNotExist(err) {
-		panic(fmt.Sprintf("Directory %s does not exist", uploadPath))
+	if _, err := os.Stat(config.UploadDir); os.IsNotExist(err) {
+		panic(fmt.Sprintf("Directory %s does not exist", config.UploadDir))
 	}
 
 	store := filestore.FileStore{
-		Path: uploadPath,
+		Path: config.UploadDir,
 	}
 
 	composer := tusd.NewStoreComposer()

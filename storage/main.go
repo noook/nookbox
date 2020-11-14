@@ -2,31 +2,28 @@ package storage
 
 import (
 	"errors"
-	"flag"
 	"fmt"
 	"math/rand"
 	"os"
 	"path/filepath"
 	"time"
+	"tus-server/config"
 )
 
 var (
 	nameLength int
 	chars      []rune
-	uploadDir  string
 )
 
 func init() {
-	flag.IntVar(&nameLength, "file-length", 5, "Length of generated filename, extension omitted")
-	uploadDir = flag.Args()[0]
 	chars = generatePossibleChars()
 }
 
 func ProcessFile(file string) (newPath string) {
-	removeInfoFile(uploadDir, file)
-	name := generateNameBis(uploadDir, ".jpg")
-	newPath = filepath.Join(uploadDir, name)
-	err := os.Rename(filepath.Join(uploadDir, file), newPath)
+	removeInfoFile(file)
+	name := generateNameBis(config.UploadDir, ".jpg")
+	newPath = filepath.Join(config.UploadDir, name)
+	err := os.Rename(filepath.Join(config.UploadDir, file), newPath)
 
 	if err != nil {
 		fmt.Println(err)
@@ -78,8 +75,8 @@ func generateNameBis(path string, extension string) string {
 	return guid(nameLength) + extension
 }
 
-func removeInfoFile(uploadDir, name string) {
-	path := filepath.Join(uploadDir, fmt.Sprintf("%s.info", name))
+func removeInfoFile(name string) {
+	path := filepath.Join(config.UploadDir, fmt.Sprintf("%s.info", name))
 	os.Remove(path)
 }
 
