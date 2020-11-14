@@ -4,10 +4,10 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"nookbox/config"
 	"os"
 	"path/filepath"
 	"time"
-	"tus-server/config"
 )
 
 var (

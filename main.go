@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"nookbox/config"
+	"nookbox/shlink"
+	"nookbox/storage"
 	"os"
-	"tus-server/config"
-	"tus-server/shlink"
-	"tus-server/storage"
 
 	"github.com/gorilla/mux"
 	"github.com/tus/tusd/pkg/filestore"
