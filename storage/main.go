@@ -11,8 +11,7 @@ import (
 )
 
 var (
-	nameLength int
-	chars      []rune
+	chars []rune
 )
 
 func init() {
@@ -58,7 +57,7 @@ func guid(length int) (identifier string) {
 
 func generateName(path string, extension string) (string, error) {
 	for i := 0; i < 10000; i++ {
-		id := guid(nameLength)
+		id := guid(config.FileNameLength)
 		if !fileExists(filepath.Join(path, id, extension)) {
 			return id + extension, nil
 		}
@@ -68,11 +67,12 @@ func generateName(path string, extension string) (string, error) {
 }
 
 func generateNameBis(path string, extension string) string {
-	for id := guid(nameLength); !fileExists(filepath.Join(path, id, extension)); id = guid(nameLength) {
+	fmt.Println(path)
+	for id := guid(config.FileNameLength); !fileExists(filepath.Join(path, id, extension)); id = guid(config.FileNameLength) {
 		return id + extension
 	}
 
-	return guid(nameLength) + extension
+	return guid(config.FileNameLength) + extension
 }
 
 func removeInfoFile(name string) {
