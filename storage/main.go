@@ -25,7 +25,11 @@ func ProcessFile(file string) (newPath string) {
 	removeInfoFile(uploadDir, file)
 	name := generateNameBis(uploadDir, ".jpg")
 	newPath = filepath.Join(uploadDir, name)
-	os.Rename(filepath.Join(uploadDir, file), newPath)
+	err := os.Rename(filepath.Join(uploadDir, file), newPath)
+
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	return name
 }

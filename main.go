@@ -60,9 +60,9 @@ func main() {
 		vars := mux.Vars(r)
 		name := storage.ProcessFile(vars["id"])
 		response, _ := shlink.CreateLink(name)
-		w.Write(response)
-		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
+		w.Header().Add("Content-Type", "application/json")
+		w.Write(response)
 	})
 
 	http.Handle("/", r)
